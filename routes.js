@@ -1,10 +1,10 @@
 import { Router } from 'express';
-import { readFile, readdir } from 'fs/promises'
+import { readFile, readdir, writeFile } from 'fs/promises'
 
 export const router = Router();
 
-router.get('/', (req, res) =>{
-    const posts = readdir('./posts')
+router.get('/', async (req, res) =>{
+    const posts = await readdir('./posts')
     .then(posts => {
         res.render('index', { 'posts': posts })
     })
@@ -22,11 +22,24 @@ router.get('/add', (req, res) => {
 router.post('/add/submit', async (req, res) => {
     const title = req.body.title;
     const content = req.body.content;
+
+    try {
+        await writeFile(`./posts/${title}`, content);
+        console.log('Post created successfully');
+        res.render('submit', { 'title': title });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json(err);
+    }
 });
 
 router.get('/post/:title', async (req, res) => {
     try {
-        const content = await readFile(`./posts/${req.params.title}`, 'utf-8');
+        let content = await readFile(`./posts/${req.params.title}`, 'utf-8');
+        content = content
+        .split(/\n+/) // split by blank lines/newlines
+        .map(p => `<p>${p}</p>`)
+        .join('');
         res.render('post', { 'title': req.params.title, 'content': content });
     } catch {
         console.error("Couldn't read file");
