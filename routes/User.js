@@ -7,7 +7,7 @@ import authMiddleware from '../middleware/auth.js';
 export const router = express.Router();
 
 router.get('/register', (req, res) => {
-    res.render('register');
+    res.render('pages/register');
 });
 
 router.get('/login', (req, res) => {

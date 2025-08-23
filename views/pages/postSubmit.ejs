@@ -8,11 +8,11 @@
 </head>
 <body>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js" integrity="sha384-ndDqU0Gzau9qJ1lfW4pNLlhNTkCfHzAVBReH9diLvGRem5+R9g2FzA8ZGN954O5Q" crossorigin="anonymous"></script>
-    <%- include('partials/navbar.ejs') %>
+    <%- include('../partials/navbar.ejs') %>
 
     <h1 class="fw-bold text-center">Post created successfully!</h1>
     <p class="text-body-secondary fs-2 text-center">
-        <a href="http://localhost:8000/post/<%- title %>">Click here to see it</a>
+        <a href="http://localhost:<%= process.env.PORT %>/post/read/<%- title %>">Click here to see it</a>
     </p>
 </body>
 </html>
