@@ -28,7 +28,7 @@ router.get('/read/:title', async (req, res) => {
         .split(/\n+/) // split by blank lines/newlines
         .map(p => `<p>${p}</p>`)
         .join('');
-        res.render('pages/post', { 'title': req.params.title, 'content': content });
+        res.render('pages/readPost', { 'title': req.params.title, 'content': content });
     } catch {
         console.error("Couldn't read file");
         res.status(500).json("Couldn't read file")

@@ -11,7 +11,7 @@ router.get('/register', (req, res) => {
 });
 
 router.get('/login', (req, res) => {
-    res.send('User login page');
+    res.render('pages/login');
 });
 
 router.post('/register/submit', async (req, res) => {
@@ -53,17 +53,18 @@ router.post('/login/submit', async (req, res) => {
             username: user.username,
         }, process.env.JWT_SECRET, { expiresIn: '1h' });
 
-        res.json({ token });
+        res.cookie('token', token, { httpOnly: true, secure: false });
+        res.redirect('/');
     } catch (error) {
         res.status(500).json({ message: "Error logging in" });
     }
 });
 
-router.get("/profile", authMiddleware, async (req, res) => {
+router.get("/profile", async (req, res) => {
     try {
         // req.user comes from the token (step 7)
         const user = await User.findById(req.user.id).select("-password");
-        res.json(user); 
+        res.json(user.username) 
     } catch (err) {
         res.status(500).json({ message: "Server error" });
     }

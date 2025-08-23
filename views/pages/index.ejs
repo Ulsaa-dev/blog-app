@@ -12,7 +12,7 @@
     
     <ul>
         <% for (let i = 0; i < posts.length; i++) { %>
-            <li><a href="http://localhost:<%= process.env.PORT %>/post/read/<%= posts[i] %>" class="fs-3 link-offset-1 link-offset-2-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover"><%= posts[i] %></a></li>
+            <li><a href="/post/read/<%= posts[i] %>" class="fs-3 link-offset-1 link-offset-2-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover"><%= posts[i] %></a></li>
         <% } %>
     </ul>
 
